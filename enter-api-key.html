@@ -1,40 +1,44 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>API Key</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Please enter a valid API key.</div>
-        <form>
-            <input type="email" id="apiKey" name="apiKey"/>
-            <button id="submitApiKey">Submit</button>
-        </form>
+<html lang="en">
+<head>
+  <title>API Key Login | Contact Book</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2 style="text-align: center; color: #2b6777;">🔑 Enter Your API Key</h2>
+    <p style="text-align: center; color: #555;">
+      This Contact Book app requires a valid API key to access your contacts. <br/>
+      Please enter it below to get started.
+    </p>
 
-        
-        <script>
-            let rootPath = "https://mysite.itvarsity.org/api/ContactBook/";
-            document.getElementById("submitApiKey").addEventListener('click', setApiKey);
+    <form>
+      <input type="email" id="apiKey" name="apiKey" placeholder="Enter API key..." required />
+      <button id="submitApiKey">Submit</button>
+    </form>
+  </div>
 
-            function setApiKey(e){
-                e.preventDefault();
-                
-                apiKey = document.getElementById("apiKey").value;
-                fetch(rootPath + "controller/api-key/?apiKey=" + apiKey)
-                        .then(function (response) {
-                            return response.text();
-                        })
-                        .then(function (data) {
-                            
-                            if (data == "1") {
-                                localStorage.setItem("apiKey", apiKey);
-                                window.open("index.html", "_self");
-                            } else {
-                                alert(data + "Invalid API key entered!");
-                            }
-                        })
-            }
-        </script>
-    </body>
+  <script>
+    let rootPath = "https://mysite.itvarsity.org/api/ContactBook/";
+    document.getElementById("submitApiKey").addEventListener('click', setApiKey);
+
+    function setApiKey(e) {
+      e.preventDefault();
+      const apiKey = document.getElementById("apiKey").value;
+
+      fetch(rootPath + "controller/api-key/?apiKey=" + apiKey)
+        .then(response => response.text())
+        .then(data => {
+          if (data == "1") {
+            localStorage.setItem("apiKey", apiKey);
+            window.open("index.html", "_self");
+          } else {
+            alert("❌ Invalid API key entered!");
+          }
+        });
+    }
+  </script>
+</body>
 </html>
